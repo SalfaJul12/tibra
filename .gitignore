@@ -1,0 +1,4 @@
+/writable/*
+/vendor/*
+.env
+app/Config/Database.php
