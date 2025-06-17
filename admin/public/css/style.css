@@ -1,0 +1,176 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  height: 100vh;
+  background: linear-gradient(to bottom, #318ECB 0%, #184765 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: #fff;
+}
+
+.card {
+  border-radius: 20px;
+  padding: 40px;
+  width: 400%;
+  max-width: 500px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.title1 {
+    position: absolute;
+    top: 35%;
+    left: 40px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.title2 {
+    position: absolute;
+    top: 25%;
+    right: 10%;
+    font-size: 2.5rem;
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.title-login {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+
+.field {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.field label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.field input {
+  width: 100%;
+  padding: 15px 15px;
+  border-radius: 10px;
+  border-color: #000000;
+  background-color: #fff;
+  color: #000;
+  font-size: 0.9rem;
+}
+
+.field input:active {
+  border-color: #318ECB;
+}
+
+input[type="submit"] {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 10px 30px;
+  border-radius: 30px;
+  font-weight: bold;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+input[type="submit"]:hover {
+  background-color: #318ECB;
+  color: white;
+}
+
+.login-form a {
+  color: #fff;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.login-form a:hover {
+  text-decoration: underline;
+}
+
+.forgot-register {
+    margin-left: 65%;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 0.85rem;
+}
+
+.sign{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 0.85rem;
+}
+
+.register {
+  margin-top: 30px;
+}
+
+.register p {
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  gap: 10px;
+}
+
+.separator::before,
+.separator::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: #000000;
+  opacity: 0.6;
+}
+
+.reg-menu {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.box-menu {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f1f1f1;
+  border-radius: 30px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  font-weight: 500;
+  color: #000;
+}
+
+.box-menu:hover {
+  background: #fff;
+}
+
+.box-menu i {
+  font-size: 1.1rem;
+}
+
+.image {
+  position: absolute;
+  left: 0%;
+  bottom: 0%;
+  width: 300px;
+  height: 300px;
+  background: url('computer.png') no-repeat center center;
+  background-size: cover;
+}
+
