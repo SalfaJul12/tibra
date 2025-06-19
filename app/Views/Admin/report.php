@@ -145,7 +145,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Laporan (WIP)</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Laporan Penjualan (WIP)</h1>
                     </div>
 
                     <!-- Content Row -->
@@ -158,27 +158,38 @@
                                 <thead class="table-primary">
                                     <tr>
                                     <th scope="col">ID</th>
-                                    <th scope="col">Fullname</th>
+                                    <th scope="col">Nama</th>
                                     <th scope="col">Email</th>
-                                    <th scope="col">Password</th>
-                                    <th scope="col">Tipe</th>
+                                    <th scope="col">Produk</th>
+                                    <th scope="col">Total</th>
+                                    <th scope="col">Tanggal</th>
                                     <th scope="col" class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                    <td>101</td>
-                                    <td>Ujang Goblog</td>
-                                    <td>ujang@gmail.com</td>
-                                    <td>*******</td>
-                                    <td>Admin</td>
-                                    <td class="text-center">
-                                        <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalUser">Edit</button>
-                                        <button class="btn btn-sm btn-danger">Hapus</button>
-                                    </td>
-                                    </tr>
-                                    <!-- Tambahkan baris lain sesuai kebutuhan -->
-                                </tbody>
+
+
+
+<tbody>
+    <?php foreach ($pembelian as $i => $row): ?>
+        <tr>
+            <td><?= $i + 1 ?></td>
+            <td><?= esc($row['fullname']) ?></td>
+            <td><?= esc($row['email']) ?></td>
+            <td><?= esc($row['nama_produk']) ?></td>
+            <td><?= number_format($row['harga_produk'], 0, ',', '.') ?></td>
+            <td><?= date('Y-m-d H:i:s', strtotime($row['tanggal_pembelian'])) ?></td>
+            <td class="text-center">
+                <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalUser">Edit</button>
+                <button class="btn btn-sm btn-danger">Hapus</button>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</tbody>
+
+
+
+
+
                                 </table>
                             </div>
                             </div>

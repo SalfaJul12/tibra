@@ -15,7 +15,11 @@ class ProdukModel extends Model
         'merk_produk',
         'type_produk',
         'tahun_pembuatan',
-        'photo_produk'
+        'jumlah',
+        'photo_produk',
+        'stok_produk',
+        'disokon'
+
     ];
 
     protected $useTimestamps = false;   

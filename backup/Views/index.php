@@ -145,11 +145,37 @@
 </head>
 <body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg px-4">
-    <a class="navbar-brand fw-bold" href="#">TIBRA <span>HARDWARE</span></a>
-    <div class="ms-auto d-flex align-items-center">
-    </div>
-  </nav>
+<nav class="navbar navbar-expand-lg px-4">
+  <a class="navbar-brand fw-bold" href="<?= base_url() ?>">TIBRA <span>HARDWARE</span></a>
+  <div class="ms-auto d-flex align-items-center">
+    <ul class="navbar-nav flex-row gap-3">
+      <?php 
+      $session = \Config\Services::session();
+      if (!$session->get('logged_in')): ?>
+        <!-- Jika belum login -->
+        <li class="nav-item">
+          <a class="nav-link" href="<?= base_url('login') ?>">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<?= base_url('register') ?>">Register</a>
+        </li>
+      <?php else: ?>
+        <!-- Jika sudah login -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+            <i class="bi bi-person-circle me-1"></i>
+            <?= esc($session->get('fullname')) ?>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="<?= base_url('profile') ?>">Profile</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<?= base_url('logout') ?>">Logout</a></li>
+          </ul>
+        </li>
+      <?php endif; ?>
+    </ul>
+  </div>
+</nav>
 
   <!-- Menu Bar -->
   <div class="menu-bar">
@@ -299,22 +325,6 @@
       Email: tibra@technology.id | Telp: +62 812 3456 7890
     </p>
   </footer>
-
-  <!-- Profile Sidebar -->
-  <div class="profile-sidebar" id="profileSidebar">
-    <span class="close-btn" onclick="toggleProfileSidebar()">&times;</span>
-    <div class="profile-header text-center">
-      <h2><?= session()->get('fullname'); ?></h2>
-      <p><?= session()->get('address'); ?></p>
-      <hr />
-    </div>
-    <div class="profile-content mt-4">
-      <ul>
-        <li><a href="">Account Setting</a></li>
-        <li><a href="logout">Logout</a></li>
-      </ul>
-    </div>
-  </div>
 
   <!-- Overlay -->
   <div class="overlay" id="overlay" onclick="toggleProfileSidebar()"></div>

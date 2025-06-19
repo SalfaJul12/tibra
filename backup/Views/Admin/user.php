@@ -66,6 +66,7 @@
                         <a class="collapse-item" href="produk">Produk</a>
                         <a class="collapse-item" href="diskon">Discount</a>
                         <a class="collapse-item active" href="user">User</a>
+                        <a class="collapse-item" href="report">Report</a>
                     </div>
                 </div>
             </li>
@@ -108,57 +109,6 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        <!-- Nav Item - Alerts -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
-                            </a>
-                            <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Alerts Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-file-alt text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-success">
-                                            <i class="fas fa-donate text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 7, 2019</div>
-                                        $290.29 has been deposited into your account!
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-warning">
-                                            <i class="fas fa-exclamation-triangle text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                            </div>
-                        </li>
-
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
@@ -174,7 +124,7 @@
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="dashboard">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Activity Log
                                 </a>
@@ -201,9 +151,9 @@
                     <!-- Content Row -->
                     <div class="row">
                         <div class="container my-5">
-
                             <div class="card shadow-lg">
                             <div class="card-body">
+
                                 <table class="table table-bordered table-hover table-striped align-middle">
                                 <thead class="table-primary">
                                     <tr>
@@ -211,23 +161,30 @@
                                     <th scope="col">Fullname</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Password</th>
+                                    <th scope="col">Address</th>
                                     <th scope="col">Tipe</th>
                                     <th scope="col" class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                <?php foreach ($user as $us): ?>
                                     <tr>
-                                    <td>101</td>
-                                    <td>Ujang Goblog</td>
-                                    <td>ujang@gmail.com</td>
+                                    <td><?= esc($us['id_user']) ?></td>
+                                    <td><?= esc($us['fullname']) ?></td>
+                                    <td><?= esc($us['email']) ?></td>
                                     <td>*******</td>
-                                    <td>Admin</td>
+                                    <td><?= esc($us['address']) ?></td>
+                                    <td><?= esc($us['role']) ?></td>
                                     <td class="text-center">
-                                        <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalUser">Edit</button>
-                                        <button class="btn btn-sm btn-danger">Hapus</button>
+                                        <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalUser<?= esc($us['id_user']) ?>">
+                                            Edit
+                                        </button>
+                                        <a href="user/delete/<?= esc($us['id_user']) ?>" onclick="return confirm('Hapus produk ini?')">
+                                        <button class="btn btn-sm btn-danger">Hapus</button></a>
                                     </td>
                                     </tr>
                                     <!-- Tambahkan baris lain sesuai kebutuhan -->
+                                <?php endforeach; ?>
                                 </tbody>
                                 </table>
                             </div>
@@ -283,31 +240,32 @@
     </div>
 
 <!-- MODAL -->
-<div class="modal fade" id="modalUser" tabindex="-1" role="dialog" aria-labelledby="modalUserLabel" aria-hidden="true">
+<?php foreach ($user as $us): ?>
+<div class="modal fade" id="modalUser<?= esc($us['id_user']) ?>" tabindex="-1" role="dialog" aria-labelledby="modalUserLabel<?= esc($us['id_user']) ?>" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <form action="simpan_diskon.php" method="POST">
+      <form action="<?= site_url('user/update/' . $us['id_user']) ?>" method="POST">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalUserLabel">Edit User</h5>
+          <h5 class="modal-title" id="modalUserLabel<?= esc($us['id_user']) ?>">Edit User</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
             <div class="form-group">
-                <label for="harga">Nama</label>
-                <input type="text" class="form-control" name="harga" id="harga" required>
+                <label for="fullname">Fullname</label>
+                <input type="text" class="form-control" name="fullname" id="fullname" value="<?= esc($us['fullname']) ?>" required>
             </div>
             <div class="form-group">
-                <label for="harga">Email</label>
-                <input type="email" class="form-control" name="harga" id="harga" required>
+                <label for="email">Email</label>
+                <input type="email" class="form-control" name="email" id="email" value="<?= esc($us['email']) ?>" required>
             </div>
             <div class="form-group">
-                <label for="kategori">Type</label>
-                <select class="form-control" name="kategori" id="kategori" required>
-                    <option value="" disabled selected>Pilih Kategori</option>
-                    <option value="Keyboard">Customer</option>
-                    <option value="Mouse">Admin</option>
+                <label for="role">Type</label>
+                <select class="form-control" name="role" id="role" required>
+                    <option value="" disabled selected>Pilih Role</option>
+                    <option value="Customer" <?= ($us['role'] ?? '') == 'Customer' ? 'selected' : '' ?>>Customer</option>
+                    <option value="Admin" <?= ($us['role'] ?? '') == 'Admin' ? 'selected' : '' ?>>Admin</option>
                 </select>
             </div>
         </div>
@@ -319,6 +277,7 @@
     </div>
   </div>
 </div>
+<?php endforeach; ?>
 
     <!-- Bootstrap core JavaScript-->
     <script src="admin/vendor/jquery/jquery.min.js"></script>

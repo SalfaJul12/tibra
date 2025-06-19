@@ -106,7 +106,13 @@ class AuthController extends BaseController
 
     public function logout()
     {
+        $role = session()->get('role'); // Ambil role dari session
         session()->destroy();
-        return redirect()->to('/login');
+
+        if ($role === 'Admin') {
+            return redirect()->to('/login');
+        }
+
+        return redirect()->to('/');
     }
 }

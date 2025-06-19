@@ -184,10 +184,7 @@
         <li><a href="kategori">Kategori</a></li>
         <li><a href="about">Tentang</a></li>
         <li class="ms-auto d-flex align-items-center">
-          <input type="text" placeholder="Search .." />
-          <button class="btn btn-link text-white ms-2" id="hamburgerBtn">
-            <i class="fas fa-bars"></i>
-          </button>
+          <form action="<?= base_url('kategori') ?>"><input type="text" placeholder="Search .." /></form>
         </li>
       </ul>
     </div>
@@ -197,7 +194,7 @@
   <div class="about">
     <div class="container">
       <div class="tab">
-        <h3>About US</h3>
+        <h3 style="text-align:center;">About US</h3>
         <p>TIBRA ini adalah sebuah website untuk menjual barang-barang bla bla bla bla nla</p>
         <p>Kami adalah perusahaan yang berdedikasi untuk menyediakan produk hardware berkualitas tinggi dengan harga terjangkau. Dengan pengalaman lebih dari 10 tahun di industri ini, kami bangga dapat melayani kebutuhan pelanggan kami dengan baik.</p>
         <p>Visi kami adalah menjadi penyedia perangkat keras terkemuka di Indonesia, sementara misi kami adalah memberikan pengalaman berbelanja yang mudah, aman, dan menyenangkan bagi semua pelanggan kami.</p>

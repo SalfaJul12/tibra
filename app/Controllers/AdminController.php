@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Models\ProdukModel;
 use App\Models\DiskonModel;
 use App\Models\UserModel;
+use App\Models\PembelianModel;
 
 class AdminController extends BaseController
 {
@@ -83,8 +84,11 @@ class AdminController extends BaseController
 
     public function report()
     {
-        return view('Admin/report.php');
+        $pembelianModel = new \App\Models\PembelianModel(); // panggil model
+        $data['pembelian'] = $pembelianModel->getLaporanPembelian(); // ambil datanya
+        return view('Admin/report', $data); // kirim ke view
     }
+
 
     public function store()
     {

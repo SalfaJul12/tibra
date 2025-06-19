@@ -43,6 +43,9 @@ $routes->get('diskon/delete/(:num)', 'DiskonController::delete/$1'); // Menghapu
 $routes->post('user/update/(:num)', 'AdminController::update_user/$1');
 $routes->get('user/delete/(:num)', 'AdminController::delete_user/$1');
 
+$routes->get('profile', 'Profile::index');
+$routes->post('profile/update', 'Profile::update');
+
 //Report
 $routes->get('report', 'AdminController::report');
 
@@ -57,4 +60,8 @@ $routes->get('shipping', 'Home::shipping'); // <== ini penting untuk menghindari
 $routes->get('history', 'Home::history');
 $routes->get('home/history', 'Home::history');
 
+// Pembelian
+$routes->post('pembelian/simpan', 'PembelianController::simpan');
 
+//Cart
+$routes->get('cart', 'Home::cart');

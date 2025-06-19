@@ -6,6 +6,7 @@
   <title>TIBRA HARDWARE</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/popup.css">
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -185,9 +186,17 @@
         <li><a href="kategori">Kategori</a></li>
         <li><a href="about">Tentang</a></li>
         <li class="ms-auto d-flex align-items-center">
+          <form action="<?= base_url('kategori') ?>"></form>
           <input type="text" placeholder="Search .." />
           <button class="btn btn-link text-white ms-2" id="hamburgerBtn">
-            <i class="fas fa-bars"></i>
+            <?php 
+              $session = \Config\Services::session();
+              if (!$session->get('logged_in')): ?>
+                <!-- Jika belum login -->
+              <?php else: ?>
+                <!-- Jika sudah login -->
+                 <button class="dropdown-item" onclick="toggleCart()" style="width:10px;"><i class="fas fa-shopping-cart"></i></button>
+              <?php endif; ?>
           </button>
         </li>
       </ul>
@@ -326,11 +335,29 @@
     </p>
   </footer>
 
-  <!-- Overlay -->
-  <div class="overlay" id="overlay" onclick="toggleProfileSidebar()"></div>
+  <div id="cartSidebar">
+    <div class="p-3 border-bottom d-flex justify-content-between align-items-center">
+      <strong><i class="fas fa-shopping-cart"></i> Cart</strong>
+      <button class="btn btn-sm btn-danger" onclick="toggleCart()">&times;</button>
+    </div>
+    <div class="p-3">
+      <p>Produk A - Rp10.000 x 2</p>
+      <p>Produk B - Rp15.000 x 1</p>
+      <hr>
+      <h5>Total: Rp35.000</h5>
+      <button class="btn btn-success btn-block"><i class="fas fa-credit-card"></i> Checkout</button>
+    </div>
+  </div>
 
   <!-- JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function toggleCart() {
+      document.getElementById('cartSidebar').classList.toggle('open');
+    }
+  </script>
   <script>
     function toggleProfileSidebar() {
       const sidebar = document.getElementById('profileSidebar');

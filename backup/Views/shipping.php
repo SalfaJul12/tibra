@@ -64,15 +64,14 @@
 
     <div class="row">
       <div class="col-md-6">
-<p><strong>Produk:</strong> <?= esc($checkout['produk']['nama_produk']) ?></p>
-<p><strong>Tipe:</strong> <?= esc($checkout['produk']['type_produk']) ?></p>
-<p><strong>Harga:</strong> Rp. <?= number_format($checkout['produk']['harga_produk'], 0, ',', '.') ?></p>
-<p><strong>Metode Pembayaran:</strong> <?= strtoupper($checkout['metode_pembayaran']) ?></p>
-<p><strong>Ekspedisi:</strong> <?= strtoupper($checkout['pengiriman']) ?></p>
+        <p><strong>Produk:</strong> <?= esc($produk['nama_produk']) ?></p>
+        <p><strong>Tipe:</strong> <?= esc($produk['type_produk']) ?></p>
+        <p><strong>Harga:</strong> Rp. <?= number_format($produk['harga_produk'], 0, ',', '.') ?></p>
+        <p><strong>Metode Pembayaran:</strong> <?= strtoupper($metode_pembayaran) ?></p>
+        <p><strong>Ekspedisi:</strong> <?= strtoupper($pengiriman) ?></p>
       </div>
       <div class="col-md-6 text-center">
-        <img src="/uploads/<?= esc($checkout['produk']['photo_produk']) ?>" class="img-fluid rounded" style="width: 120px;" alt="Produk">
-
+        <img src="/uploads/<?= esc($produk['photo_produk']) ?>" class="img-fluid rounded" style="width: 120px;" alt="Produk">
       </div>
     </div>
 

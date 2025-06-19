@@ -6,6 +6,7 @@
   <title>Kategori - TIBRA HARDWARE</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/popup.css">
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -129,10 +130,38 @@
 </head>
 <body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg px-4">
-  <a class="navbar-brand fw-bold" href="<?= base_url() ?>">TIBRA <span>HARDWARE</span></a>
-</nav>
+ <!-- Navbar -->
+ <nav class="navbar navbar-expand-lg px-4">
+    <a class="navbar-brand fw-bold" href="<?= base_url() ?>">TIBRA <span>HARDWARE</span></a>
+    <div class="ms-auto d-flex align-items-center">
+      <ul class="navbar-nav flex-row gap-3">
+        <?php 
+        $session = \Config\Services::session();
+        if (!$session->get('logged_in')): ?>
+          <!-- Jika belum login -->
+          <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('login') ?>">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('register') ?>">Register</a>
+          </li>
+        <?php else: ?>
+          <!-- Jika sudah login -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+              <i class="bi bi-person-circle me-1"></i>
+              <?= esc($session->get('fullname')) ?>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="<?= base_url('profile') ?>">Profile</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="<?= base_url('logout') ?>">Logout</a></li>
+            </ul>
+          </li>
+        <?php endif; ?>
+      </ul>
+    </div>
+  </nav>
 
 <!-- Menu Bar -->
 <div class="menu-bar">
@@ -142,10 +171,16 @@
       <li><a href="<?= base_url('kategori') ?>">Kategori</a></li>
       <li><a href="<?= base_url('about') ?>">Tentang</a></li>
       <li class="ms-auto d-flex align-items-center">
-        <form class="d-flex" action="<?= base_url('kategori') ?>" method="get">
-          <input type="text" name="keyword" placeholder="Search Here..." value="<?= esc($keyword ?? '') ?>">
-          <button type="submit" class="btn btn-link text-white ms-2"><i class="fas fa-search"></i></button>
-        </form>
+          <button class="btn btn-link text-white ms-2" id="hamburgerBtn">
+            <?php 
+              $session = \Config\Services::session();
+              if (!$session->get('logged_in')): ?>
+                <!-- Jika belum login -->
+              <?php else: ?>
+                <!-- Jika sudah login -->
+                <button class="dropdown-item" onclick="toggleCart()" style="width:10px;"><i class="fas fa-shopping-cart"></i></button>
+              <?php endif; ?>
+          </button>
       </li>
     </ul>
   </div>
@@ -179,8 +214,23 @@
         <div class="alert alert-warning">Produk tidak ditemukan.</div>
     <?php endif; ?>
 </div>
-
 </div>
+</div>
+
+<div id="cartSidebar">
+    <div class="p-3 border-bottom d-flex justify-content-between align-items-center">
+      <strong><i class="fas fa-shopping-cart"></i> Cart</strong>
+      <button class="btn btn-sm btn-danger" onclick="toggleCart()">&times;</button>
+    </div>
+    <div class="p-3">
+      <p>Produk A - Rp10.000 x 2</p>
+      <p>Produk B - Rp15.000 x 1</p>
+      <hr>
+      <h5>Total: Rp35.000</h5>
+      <button class="btn btn-success btn-block"><i class="fas fa-credit-card"></i> Checkout</button>
+    </div>
+  </div>
+
 
 <!-- Footer -->
 <footer class="text-white text-center p-4">
@@ -192,5 +242,12 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function toggleCart() {
+      document.getElementById('cartSidebar').classList.toggle('open');
+    }
+  </script>
 </body>
 </html>

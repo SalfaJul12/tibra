@@ -65,48 +65,44 @@
 </head>
 <body>
 
-
+  <!-- Navbar -->
   <nav class="navbar navbar-expand-lg">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="#">TIBRA <span>HARDWARE</span></a>
+      <a class="navbar-brand fw-bold" href="<?= base_url() ?>">TIBRA <span>HARDWARE</span></a>
       <div class="ms-auto d-flex">
-        <a class="nav-link" href="#">Beranda</a>
-        <a class="nav-link" href="#">Kategori</a>
-        <a class="nav-link" href="#">Tentang</a>
-        <a class="nav-link" href="#">Account</a>
-        <a class="nav-link" href="#">Logout</a>
+        <a class="nav-link" href="<?= base_url() ?>">Beranda</a>
+        <a class="nav-link" href="<?= base_url('kategori') ?>">Kategori</a>
+        <a class="nav-link" href="<?= base_url('about') ?>">Tentang</a>
+       
       </div>
     </div>
   </nav>
 
-
+  <!-- Product Detail -->
   <div class="container">
     <div class="product-container d-flex justify-content-between align-items-start flex-wrap">
       <div class="d-flex align-items-start flex-wrap">
-        <img src="/Assets/img/cpu.png" class="product-img me-4" alt="CPU">
+      <img src="/uploads/<?= esc($produk['photo_produk']) ?>" class="product-img me-4" alt="<?= esc($produk['nama_produk']) ?>">
+
         <div>
-          <p class="mb-1">Procecor</p>
-          <h5 class="fw-bold">Procecor Intel 1911</h5>
-          <p class="mb-1">Rp. 750.000</p>
-          <a href="<?= base_url('home/shopnow') ?>" class="shop-btn">Shop Now</a>
+          <p class="mb-1"><?= esc($produk['type_produk']) ?></p>
+          <h5 class="fw-bold"><?= esc($produk['nama_produk']) ?></h5>
+          <p class="mb-1">Rp. <?= number_format($produk['harga_produk'], 0, ',', '.') ?></p>
+          <a href="<?= base_url('home/shopnow/' . $produk['id_produk']) ?>" class="shop-btn">Shop Now</a>
+
         </div>
       </div>
       <div class="desc-box">
         <h6 class="fw-bold">Deskripsi</h6>
-        <p>
-          Procecor Intel 1911 adalah salah satu inovasi terbaru dari Intel yang dirancang untuk memenuhi kebutuhan komputasi modern dengan performa tinggi dan efisiensi daya maksimal. Dibekali dengan arsitektur generasi terbaru, Intel 1911 menghadirkan kecepatan pemrosesan luar biasa yang sangat cocok untuk keperluan multitasking berat, gaming, desain grafis, serta pekerjaan profesional lainnya.
-        </p>
-        <p>
-          Dengan jumlah core dan thread yang ditingkatkan, prosesor ini mampu menangani beban kerja berat tanpa mengalami penurunan performa. Dukungan teknologi Intel Turbo Boost membuatnya mampu mencapai frekuensi clock yang tinggi ketika dibutuhkan, sehingga pengguna dapat merasakan pengalaman komputasi yang cepat dan responsif.
-        </p>
-        <p>
-          Tak hanya itu, Intel 1911 juga mendukung integrasi dengan kartu grafis terbaru serta teknologi memori DDR5, menjadikannya solusi ideal bagi pengguna yang ingin membangun sistem PC yang future-proof. Dilengkapi dengan sistem pendingin canggih dan efisiensi termal yang ditingkatkan, prosesor ini mampu bekerja dengan suhu yang stabil bahkan dalam penggunaan intensif.
-        </p>
+        <p><?= esc($produk['deskripsi_produk']) ?></p>
+        <p><strong>Merk:</strong> <?= esc($produk['merk_produk']) ?></p>
+        <p><strong>Tahun Pembuatan:</strong> <?= esc($produk['tahun_pembuatan']) ?></p>
+        <p><strong>Stok Tersedia:</strong> <?= esc($produk['jumlah']) ?> unit</p>
       </div>
     </div>
   </div>
 
-
+  <!-- Footer -->
   <footer>
     <p class="mb-1">© 2025 TIBRA HARDWARE. Seluruh hak cipta dilindungi undang-undang.</p>
     <p>Alamat: Jl. Karapitan No. 116, Bandung, Indonesia</p>

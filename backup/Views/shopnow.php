@@ -71,8 +71,6 @@
         <a class="nav-link" href="#">Beranda</a>
         <a class="nav-link" href="#">Kategori</a>
         <a class="nav-link" href="#">Tentang</a>
-        <a class="nav-link" href="#">Account</a>
-        <a class="nav-link" href="#">Logout</a>
       </div>
     </div>
   </nav>
@@ -85,12 +83,12 @@
         <div class="col-md-8 d-flex">
           <div class="me-3">
             <p>1x</p>
-            <img src="/Assets/img/cpu.png" class="checkout-img" alt="CPU">
-          </div>
-          <div>
-            <p class="fw-bold">Procecor</p>
-            <p class="fw-bold">Procecor Intel 1717 gauhuajaigaansjkha</p>
-            <p>Rp. 750.000</p>
+            <img src="/uploads/<?= esc($produk['photo_produk']) ?>" class="product-img me-4" alt="<?= esc($produk['nama_produk']) ?>">
+
+<p class="fw-bold"><?= esc($produk['type_produk']) ?></p>
+<p class="fw-bold"><?= esc($produk['nama_produk']) ?></p>
+<p>Rp. <?= number_format($produk['harga_produk'], 0, ',', '.') ?></p>
+
           </div>
         </div>
         <div class="col-md-4">
@@ -117,6 +115,24 @@
       <form action="<?= base_url('home/finishPayment') ?>" method="post">
         <div class="row">
           <div class="col-md-6">
+         <div class="mb-3">
+          <select class="form-select" name="shipping" required>
+            <option value="" disabled selected>Pilih Pengiriman</option>
+            <option value="jne">JNE Express</option>
+            <option value="jnt">JNT Express</option>
+            <option value="sicepat">SiCepat</option>
+  </select>
+  </div>
+  <div class="mb-3">
+          <select class="form-select" name="payment" required>
+            <option value="" disabled selected>Pilih Metode pembayaran</option>
+            <option value="bca">BCA</option>
+            <option value="bni">BNI</option>
+            <option value="ocbc">OCBC</option>
+            <option value="mandiri">Mandiri</option>
+  </select>
+  </div>
+
             <p>Payment: <strong>BCA</strong></p>
             <div class="mb-3">
               <label for="norek">No. Rekening:</label>

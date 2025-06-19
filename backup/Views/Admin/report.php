@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>TIBRA - Discount</title>
+    <title>TIBRA - PRODUCT</title>
 
     <!-- Custom fonts for this template-->
     <link href="admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -64,9 +64,9 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">List Data:</h6>
                         <a class="collapse-item" href="produk">Produk</a>
-                        <a class="collapse-item active" href="diskon">Discount</a>
+                        <a class="collapse-item" href="diskon">Discount</a>
                         <a class="collapse-item" href="user">User</a>
-                        <a class="collapse-item" href="report">Report</a>
+                        <a class="collapse-item active" href="report">Report</a>
                     </div>
                 </div>
             </li>
@@ -144,48 +144,48 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Diskon</h1>
-                    <p class="mb-4">Halaman ini berisi informasi diskon produk.</p>
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Laporan (WIP)</h1>
+                    </div>
 
-                    <!-- DataTales Example -->
-                        <div class="row">
+                    <!-- Content Row -->
+                    <div class="row">
                         <div class="container my-5">
-                            <div class="d-flex justify-content-between mb-3">
-                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalTambahDiskon">
-                                    <i class="fas fa-plus-circle"></i> Tambah Diskon
-                                </button>
-                            </div>
-                            <div class="card shadow-lg">
-                                <div class="card-body">
-                                    <table class="table table-bordered table-hover table-striped align-middle">
-                                        <thead class="table-primary">
-                                            <tr>
-                                                <th scope="col">ID</th>
-                                                <th scope="col">Nama Produk</th>
-                                                <th scope="col">Harga</th>
-                                                <th scope="col">Diskon</th>
-                                                <th scope="col">Harga Akhir</th>
-                                                <th scope="col" class="text-center">Aksi</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php foreach ($diskon as $d): ?>
-                                                <tr>
-                                                    <td><?= esc($d['id_diskon']) ?></td>
-                                                    <td><?= esc($d['nama_produk']) ?></td>
-                                                    <td>Rp <?= number_format(esc($d['harga_produk']), 0, ',', '.') ?></td>
-                                                    <td style="color:green;"><?= esc($d['diskon']) ?>%</td>
-                                                    <td>Rp <?= number_format(esc($d['harga_akhir']), 0, ',', '.') ?></td>
-                                                    <td class="text-center">
-                                                        <a href="<?= base_url('diskon/delete/' . esc($d['id_diskon'])) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus diskon ini?')">Hapus</a>
-                                                    </td>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                            </tbody>
-                                            </table>
-                                            </div>
-                                            </div>
 
+                            <div class="card shadow-lg">
+                            <div class="card-body">
+                                <table class="table table-bordered table-hover table-striped align-middle">
+                                <thead class="table-primary">
+                                    <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Fullname</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Password</th>
+                                    <th scope="col">Tipe</th>
+                                    <th scope="col" class="text-center">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                    <td>101</td>
+                                    <td>Ujang Goblog</td>
+                                    <td>ujang@gmail.com</td>
+                                    <td>*******</td>
+                                    <td>Admin</td>
+                                    <td class="text-center">
+                                        <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalUser">Edit</button>
+                                        <button class="btn btn-sm btn-danger">Hapus</button>
+                                    </td>
+                                    </tr>
+                                    <!-- Tambahkan baris lain sesuai kebutuhan -->
+                                </tbody>
+                                </table>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
                 <!-- /.container-fluid -->
 
             </div>
@@ -232,44 +232,43 @@
         </div>
     </div>
 
-
-    <!-- MODAL -->
-    <div class="modal fade" id="modalTambahDiskon" tabindex="-1" role="dialog" aria-labelledby="modalTambahDiskonLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <form action="<?= base_url('diskon/store') ?>" method="POST">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalTambahDiskonLabel">Tambah Diskon</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="id_produk">Nama Produk</label>
-                            <select class="form-control" name="id_produk" id="id_produk" required>
-                                <option value="" disabled selected>Pilih Produk</option>
-                                <?php foreach ($produk as $p): ?>
-                                    <option value="<?= esc($p['id_produk']) ?>"><?= esc($p['nama_produk']) ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="diskon">Diskon (%)</label>
-                            <input type="number" class="form-control" name="diskon" id="diskon" required>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                    </div>
-                </form>
+<!-- MODAL -->
+<div class="modal fade" id="modalUser" tabindex="-1" role="dialog" aria-labelledby="modalUserLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form action="simpan_diskon.php" method="POST">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalUserLabel">Edit User</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="harga">Nama</label>
+                <input type="text" class="form-control" name="harga" id="harga" required>
+            </div>
+            <div class="form-group">
+                <label for="harga">Email</label>
+                <input type="email" class="form-control" name="harga" id="harga" required>
+            </div>
+            <div class="form-group">
+                <label for="kategori">Type</label>
+                <select class="form-control" name="kategori" id="kategori" required>
+                    <option value="" disabled selected>Pilih Kategori</option>
+                    <option value="Keyboard">Customer</option>
+                    <option value="Mouse">Admin</option>
+                </select>
             </div>
         </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
     </div>
-
-
-
+  </div>
+</div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="admin/vendor/jquery/jquery.min.js"></script>

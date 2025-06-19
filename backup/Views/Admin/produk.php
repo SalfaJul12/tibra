@@ -66,6 +66,7 @@
                         <a class="collapse-item active" href="">Produk</a>
                         <a class="collapse-item" href="diskon">Discount</a>
                         <a class="collapse-item" href="user">User</a>
+                        <a class="collapse-item" href="report">Report</a>
                     </div>
                 </div>
             </li>
@@ -108,57 +109,6 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        <!-- Nav Item - Alerts -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
-                            </a>
-                            <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Alerts Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-file-alt text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-success">
-                                            <i class="fas fa-donate text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 7, 2019</div>
-                                        $290.29 has been deposited into your account!
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-warning">
-                                            <i class="fas fa-exclamation-triangle text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                            </div>
-                        </li>
-
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
@@ -174,7 +124,7 @@
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="dashboard">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Activity Log
                                 </a>
@@ -221,6 +171,7 @@
                                     <th scope="col">Deskripsi</th>
                                     <th scope="col">Tipe</th>
                                     <th scope="col">Merek</th>
+                                    <th scope="col">Jumlah</th>
                                     <th scope="col">Image</th>
                                     <th scope="col">Tahun Pembuatan</th>
                                     <th scope="col" class="text-center">Aksi</th>
@@ -235,6 +186,7 @@
                                             <td><?= esc($p['deskripsi_produk']) ?></td>
                                             <td><?= esc($p['type_produk']) ?></td>
                                             <td><?= esc($p['merk_produk']) ?></td>
+                                            <td><?= esc($p['jumlah']) ?> pcs</td>
                                             <td>
                                                 <?php if($p['photo_produk']): ?>
                                                     <img src="/uploads/<?= esc($p['photo_produk']) ?>" width="80">
@@ -256,7 +208,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <!-- /.container-fluid -->
 
@@ -307,73 +258,82 @@
     <!--- MODAL -->
 <div class="modal fade" id="modalProduk" tabindex="-1" role="dialog" aria-labelledby="modalProdukLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
-      <form action="store" method="post" enctype="multipart/form-data">
+        <form action="store" method="post" enctype="multipart/form-data">
         <?= csrf_field() ?>
         <div class="modal-header">
-          <h5 class="modal-title" id="modalProdukLabel">Tambah Produk</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
+            <h5 class="modal-title" id="modalProdukLabel">Tambah Produk</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
             <span aria-hidden="true">&times;</span>
-          </button>
+            </button>
         </div>
         <div class="modal-body">
-            <?php if(session()->getFlashdata('errors')): ?>
-                <ul style="color:red;">
-                <?php foreach(session()->getFlashdata('errors') as $error): ?>
-                    <li><?= esc($error) ?></li>
-                <?php endforeach; ?>
-                </ul>
-            <?php endif; ?>
-          <div class="form-group">
-            <label for="nama_produk">Nama Produk</label>
-            <input type="text" class="form-control" name="nama_produk" value="<?= old('nama_produk') ?>" id="nama_produk" required>
-          </div>
-          <div class="form-group">
-            <label for="harga">Harga</label>
-            <input type="number" class="form-control" name="harga_produk" value="<?= old('harga_produk') ?>" id="harga_produk" required>
-          </div>
-        <div class="form-group">
-            <label for="kategori">Tipe Produk</label>
-            <select class="form-control" name="type_produk" id="type_produk" required>
-                <option value="" disabled selected>Pilih Kategori</option>
-                <option value="Keyboard">Keyboard</option>
-                <option value="Mouse">Mouse</option>
-                <option value="Monitor">Monitor</option>
-                <option value="CPU">CPU</option>
-                <option value="Lainnya">Lainnya</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="nama_produk">Deskripsi</label>
-            <textarea class="form-control" name="deskripsi_produk" value="<?= old('deskripsi_produk') ?>" id="nama_produk" required></textarea>
-          </div>
-        <div class="form-group">
-            <label for="diskon">Merk</label>
-            <input type="text" class="form-control" name="merk_produk" value="<?= old('merk_produk') ?>" id="diskon" required>
-         </div>
-        <div class="form-group">
-            <label for="year">Tahun Pembuatan</label>
-            <input type="number" class="form-control" name="tahun_pembuatan" value="<?= old('tahun_pembuatan') ?>" id="diskon" required>
-         </div>
-        <div class="form-group">
-            <label for="image">Image</label>
-            <input type="file" class="form-control" name="photo_produk" id="diskon">
-         </div>
+            <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                <div class="form-group">
+                    <label for="nama_produk">Nama Produk</label>
+                    <input type="text" class="form-control" name="nama_produk" value="<?= old('nama_produk') ?>" id="nama_produk" required>
+                </div>
+                <div class="form-group">
+                    <label for="harga_produk">Harga</label>
+                    <input type="number" class="form-control" name="harga_produk" value="<?= old('harga_produk') ?>" id="harga_produk" required>
+                </div>
+                <div class="form-group">
+                    <label for="type_produk">Tipe Produk</label>
+                    <select class="form-control" name="type_produk" id="type_produk" required>
+                    <option value="" disabled selected>Pilih Kategori</option>
+                    <option value="Keyboard">Keyboard</option>
+                    <option value="Mouse">Mouse</option>
+                    <option value="Monitor">Monitor</option>
+                    <option value="CPU">CPU</option>
+                    <option value="Lainnya">Lainnya</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="merk_produk">Merk</label>
+                    <input type="text" class="form-control" name="merk_produk" value="<?= old('merk_produk') ?>" id="merk_produk" required>
+                </div>
+                </div>
+
+                <div class="col-md-6">
+                <div class="form-group">
+                    <label for="deskripsi_produk">Deskripsi</label>
+                    <textarea class="form-control" name="deskripsi_produk" id="deskripsi_produk" required><?= old('deskripsi_produk') ?></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="jumlah">Jumlah</label>
+                    <input type="number" class="form-control" name="jumlah" value="<?= old('jumlah') ?>" id="jumlah" required>
+                </div>
+                <div class="form-group">
+                    <label for="tahun_pembuatan">Tahun Pembuatan</label>
+                    <input type="number" class="form-control" name="tahun_pembuatan" value="<?= old('tahun_pembuatan') ?>" id="tahun_pembuatan" required>
+                </div>
+                <div class="form-group">
+                    <label for="photo_produk">Image</label>
+                    <input type="file" class="form-control" name="photo_produk" id="photo_produk">
+                </div>
+                </div>
+            </div>
+            </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-          <button type="submit" class="btn btn-primary">Simpan</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+            <button type="submit" class="btn btn-primary">Simpan</button>
         </div>
-      </form>
+        </form>
+    </div>
     </div>
   </div>
 </div>
 
+<?php foreach ($produk as $p): ?>
     <!--- MODAL -->
 <div class="modal fade" id="modalEditProduk<?= $p['id_produk'] ?>" tabindex="-1" role="dialog" aria-labelledby="modalEditProduk<?= $p['id_produk'] ?>Label" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
-      <form action="<?= site_url('update/'. $p['id_produk']) ?>" method="post" enctype="multipart/form-data">
+      <form action="<?= site_url('update/' . $p['id_produk']) ?>" method="post" enctype="multipart/form-data">
         <?= csrf_field() ?>
         <div class="modal-header">
           <h5 class="modal-title" id="modalEditProduk<?= $p['id_produk'] ?>Label">Edit Produk</h5>
@@ -382,50 +342,62 @@
           </button>
         </div>
         <div class="modal-body">
+          <div class="container-fluid">
             <?php if(session()->getFlashdata('errors')): ?>
-                <ul style="color:red;">
+              <ul style="color:red;">
                 <?php foreach(session()->getFlashdata('errors') as $error): ?>
-                    <li><?= esc($error) ?></li>
+                  <li><?= esc($error) ?></li>
                 <?php endforeach; ?>
-                </ul>
+              </ul>
             <?php endif; ?>
-          <div class="form-group">
-            <label for="nama_produk">Nama Produk</label>
-            <input type="text" class="form-control" name="nama_produk" id="nama_produk" value="<?= esc($p['nama_produk']) ?>" required>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="nama_produk<?= $p['id_produk'] ?>">Nama Produk</label>
+                  <input type="text" class="form-control" name="nama_produk" id="nama_produk<?= $p['id_produk'] ?>" value="<?= esc($p['nama_produk']) ?>" required>
+                </div>
+                <div class="form-group">
+                  <label for="harga_produk<?= $p['id_produk'] ?>">Harga</label>
+                  <input type="number" class="form-control" name="harga_produk" id="harga_produk<?= $p['id_produk'] ?>" value="<?= esc($p['harga_produk']) ?>" required>
+                </div>
+                <div class="form-group">
+                  <label for="type_produk<?= $p['id_produk'] ?>">Tipe Produk</label>
+                  <select class="form-control" name="type_produk" id="type_produk<?= $p['id_produk'] ?>" required>
+                    <option value="" disabled>Pilih Kategori</option>
+                    <option value="Keyboard" <?= ($p['type_produk'] ?? '') == 'Keyboard' ? 'selected' : '' ?>>Keyboard</option>
+                    <option value="Mouse" <?= ($p['type_produk'] ?? '') == 'Mouse' ? 'selected' : '' ?>>Mouse</option>
+                    <option value="Monitor" <?= ($p['type_produk'] ?? '') == 'Monitor' ? 'selected' : '' ?>>Monitor</option>
+                    <option value="CPU" <?= ($p['type_produk'] ?? '') == 'CPU' ? 'selected' : '' ?>>CPU</option>
+                    <option value="Lainnya" <?= ($p['type_produk'] ?? '') == 'Lainnya' ? 'selected' : '' ?>>Lainnya</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="merk_produk<?= $p['id_produk'] ?>">Merk</label>
+                  <input type="text" class="form-control" name="merk_produk" id="merk_produk<?= $p['id_produk'] ?>" value="<?= esc($p['merk_produk']) ?>" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="deskripsi_produk<?= $p['id_produk'] ?>">Deskripsi</label>
+                  <textarea class="form-control" name="deskripsi_produk" id="deskripsi_produk<?= $p['id_produk'] ?>" required><?= esc($p['deskripsi_produk']) ?></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="jumlah<?= $p['id_produk'] ?>">Jumlah</label>
+                  <input type="number" class="form-control" name="jumlah" id="jumlah<?= $p['id_produk'] ?>" value="<?= esc($p['jumlah']) ?>" required>
+                </div>
+                <div class="form-group">
+                  <label for="tahun_pembuatan<?= $p['id_produk'] ?>">Tahun Pembuatan</label>
+                  <input type="number" class="form-control" name="tahun_pembuatan" id="tahun_pembuatan<?= $p['id_produk'] ?>" value="<?= esc($p['tahun_pembuatan']) ?>" required>
+                </div>
+                <div class="form-group">
+                  <label for="photo_produk<?= $p['id_produk'] ?>">Image</label>
+                  <input type="file" class="form-control" name="photo_produk" id="photo_produk<?= $p['id_produk'] ?>">
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="harga">Harga</label>
-            <input type="number" class="form-control" name="harga_produk" value="<?= esc($p['harga_produk']) ?>" id="harga_produk" required>
-          </div>
-        <div class="form-group">
-            <label for="kategori">Tipe Produk</label>
-            <select class="form-control" name="type_produk" id="type_produk" required>
-                <option value="" disabled>Pilih Kategori</option>
-                <option value="Keyboard" <?= ($produk['type_produk'] ?? '') == 'Keyboard' ? 'selected' : '' ?>>Keyboard</option>
-                <option value="Mouse" <?= ($produk['type_produk'] ?? '') == 'Keyboard' ? 'selected' : '' ?>>Mouse</option>
-                <option value="Monitor" <?= ($produk['type_produk'] ?? '') == 'Keyboard' ? 'selected' : '' ?>>Monitor</option>
-                <option value="CPU" <?= ($produk['type_produk'] ?? '') == 'Keyboard' ? 'selected' : '' ?>>CPU</option>
-                <option value="Lainnya" <?= ($produk['type_produk'] ?? '') == 'Keyboard' ? 'selected' : '' ?>>Lainnya</option>
-            </select>
         </div>
-        <div class="form-group">
-            <label for="nama_produk">Deskripsi</label>
-            <textarea class="form-control" name="deskripsi_produk" id="deskripsi_produk" required><?= esc($p['deskripsi_produk'] ?? '') ?></textarea>
-          </div>
-        <div class="form-group">
-            <label for="diskon">Merk</label>
-            <input type="text" class="form-control" name="merk_produk" value="<?= esc($p['merk_produk']) ?>" id="merk_produk" required>
-         </div>
-        <div class="form-group">
-            <label for="year">Tahun Pembuatan</label>
-            <input type="number" class="form-control" name="tahun_pembuatan" value="<?= esc($p['tahun_pembuatan'] ?? '') ?>" id="tahun_pembuatan" required>
-         </div>
-        <div class="form-group">
-            <label for="image">Image</label>
-            <input type="file" class="form-control" name="photo_produk" id="photo_produk">
-         </div>
-        </div>
-        <input type="hidden" name="old_photo_produk" value="<?= isset($produk['photo_produk']) ? esc($produk['photo_produk']) : '' ?>">
+        <input type="hidden" name="old_photo_produk" value="<?= esc($p['photo_produk'] ?? '') ?>">
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
           <button type="submit" class="btn btn-primary">Simpan</button>
@@ -434,6 +406,8 @@
     </div>
   </div>
 </div>
+<?php endforeach ?>
+
 
 
     <!-- Bootstrap core JavaScript-->

@@ -1,0 +1,15 @@
+    #cartSidebar {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100%;
+      background: #fff;
+      box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+      overflow-y: auto;
+      transition: right 0.3s ease;
+      z-index: 1050;
+    }
+    #cartSidebar.open {
+      right: 0;
+    }

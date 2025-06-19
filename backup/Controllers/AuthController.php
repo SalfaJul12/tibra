@@ -29,13 +29,38 @@ class AuthController extends BaseController
     public function saveRegister()
     {
         $userModel = new UserModel();
+
+        // Ambil data dari form
+        $fullname = $this->request->getPost('fullname');
+        $email    = $this->request->getPost('email');
+        $password = $this->request->getPost('password');
+        $address  = $this->request->getPost('address');
+        $role     = $this->request->getPost('role') ?? 'Customer';
+
+        // Hash password dan siapkan data
         $data = [
-            'fullname' => $this->request->getPost('fullname'),
-            'email'    => $this->request->getPost('email'),
-            'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
-            'role'     => 'Customer'
+            'fullname' => $fullname,
+            'email'    => $email,
+            'password' => password_hash($password, PASSWORD_DEFAULT),
+            'address'  => $address,
+            'role'     => $role
         ];
+
+        // Simpan ke database
         $userModel->insert($data);
+
+        // Ambil data user untuk session
+        $user = $userModel->where('email', $email)->first();
+
+        // Set session
+        $session = session();
+        $session->set([
+            'isLoggedIn' => true,
+            'id'         => $user['id_user'], // disesuaikan dengan nama kolom ID Anda
+            'fullname'   => $user['fullname'],
+            'address'    => $user['address']
+        ]);
+
         return redirect()->to('/login')->with('success', 'Registrasi berhasil');
     }
 
@@ -60,13 +85,20 @@ class AuthController extends BaseController
                 'logged_in' => true
             ]);
 
-        if ($user['role'] === 'Admin') {
-            return redirect()->to('dashboard');
-        } else if ($user['role'] === 'Customer') {
-            return redirect()->to('/');  // Halaman utama untuk customer
-        } else {
-            return redirect()->to('/');
-        }
+            if ($user['role'] === 'Admin') {
+                $db = \Config\Database::connect();
+                $db->table('log')->insert([
+                    'id_user' => $user['id_user'],
+                    'fullname'   => $user['fullname'],
+                    'activity' => 'Telah Login',
+                    'created_at' => date('Y-m-d H:i:s')
+                ]);
+                return redirect()->to('dashboard');
+            } else if ($user['role'] === 'Customer') {
+                return redirect()->to('/');  // Halaman utama untuk customer
+            } else {
+                return redirect()->to('/');
+            }
         } else {
             return redirect()->back()->with('error', 'Email atau Password salah');
         }
