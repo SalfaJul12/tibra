@@ -5,12 +5,14 @@ use App\Models\ProdukModel;
 use App\Models\DiskonModel;
 use App\Models\UserModel;
 use App\Models\PembelianModel;
+use App\Models\CartModel;
 
 class AdminController extends BaseController
 {
     protected $produkModel;
     protected $diskonModel;
     protected $userModel;
+    protected $cartModel;
 
     protected $id_user;
     
@@ -19,6 +21,7 @@ class AdminController extends BaseController
         $this->produkModel = new \App\Models\ProdukModel();
         $this->diskonModel = new DiskonModel();
         $this->userModel = new UserModel();
+        $this->cartModel = new CartModel();
         helper(['form', 'url']);
         $this->id_user = session()->get('id_user');
     }
@@ -26,6 +29,7 @@ class AdminController extends BaseController
     public function index()
     {
         $data['produk'] = $this->produkModel->findAll();
+        
         if (!session()->get('logged_in')) {
             return redirect()->to('/login');
         }

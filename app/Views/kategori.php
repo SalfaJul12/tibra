@@ -219,16 +219,43 @@
 
 <div id="cartSidebar">
     <div class="p-3 border-bottom d-flex justify-content-between align-items-center">
-      <strong><i class="fas fa-shopping-cart"></i> Cart</strong>
-      <button class="btn btn-sm btn-danger" onclick="toggleCart()">&times;</button>
+        <strong><i class="fas fa-shopping-cart"></i> Cart <?= esc($session->get('fullname')) ?></strong>
+        <button class="btn btn-sm btn-danger" onclick="toggleCart()">&times;</button>
     </div>
-    <div class="p-3">
-      <p>Produk A - Rp10.000 x 2</p>
-      <p>Produk B - Rp15.000 x 1</p>
-      <hr>
-      <h5>Total: Rp35.000</h5>
-      <button class="btn btn-success btn-block"><i class="fas fa-credit-card"></i> Checkout</button>
-    </div>
+      <div class="p-2">
+          <?php if (!empty($cart)) : ?>
+              <?php $grand_total = 0; ?>
+              <?php foreach ($cart as $item) : ?>
+                  <div class="daftar mb-2 border p-2 rounded">
+                      <div class="d-flex justify-content-between align-items-center">
+                          <p class="mb-0">
+                              <i class="fas fa-box-open"></i> 
+                              <?= esc($item['nama_produk']) ?> - 
+                              Rp<?= number_format($item['harga_produk']) ?> x <?= $item['qty'] ?> <br>
+                              <strong>Total = Rp<?= number_format($item['harga_produk'] * $item['qty']) ?></strong>
+                          </p>
+                          <a href="<?= base_url('/cart/delete/' . $item['id_cart']) ?>">
+                              <button class="btn btn-sm btn-danger">
+                                  <i class="fas fa-trash-alt"></i>
+                              </button>
+                          </a>
+                      </div>
+                      <div class="mt-1 text-right">
+                          <a href="<?= base_url('/home/detail/' . $item['id_produk']) ?>" class="btn btn-sm btn-primary">
+                              <i class="fas fa-info-circle"></i> Detail
+                          </a>
+                      </div>
+                  </div>
+                  <?php $grand_total += $item['harga_total']; ?>
+              <?php endforeach; ?>
+              <hr>
+              <h5 class="text-right">Total: Rp<?= number_format($grand_total) ?></h5>
+              <a href="<?= base_url('home/shopnow/') ?>"><button class="btn btn-success btn-block"><i class="fas fa-credit-card">
+              </i> Checkout</button></a>
+          <?php else : ?>
+              <p>Keranjang kosong.</p>
+          <?php endif; ?>
+      </div>
   </div>
 
 

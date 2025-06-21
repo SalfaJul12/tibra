@@ -182,9 +182,6 @@
         <li><a href="<?= base_url('about') ?>">Tentang</a></li>
         <li class="ms-auto d-flex align-items-center">
           <input type="text" placeholder="Search .." />
-          <button class="btn btn-link text-white ms-2" id="hamburgerBtn">
-            <i class="fas fa-bars"></i>
-          </button>
         </li>
       </ul>
     </div>
@@ -200,7 +197,14 @@
           <p class="product-type"><?= esc($produk['type_produk']) ?></p>
           <h3 class="product-name"><?= esc($produk['nama_produk']) ?></h3>
           <p class="product-price">Rp. <?= number_format($produk['harga_produk'], 0, ',', '.') ?></p>
-          <a href="<?= base_url('home/shopnow/' . $produk['id_produk']) ?>" class="shop-btn">Shop Now</a>
+          <form action="<?= base_url('/cart/add') ?>" method="post">
+            <input type="hidden" name="id_produk" value="<?= esc($produk['id_produk']) ?>">
+            
+            <label for="qty">Qty</label>
+            <input type="number" name="qty" id="qty" min="1" max="999" value="1"
+              oninput="if(this.value.length > 3) this.value = this.value.slice(0,3);" required>
+            <button type="submit" class="shop-btn">Add to Cart</button>
+          </form>
         </div>
       </div>
       

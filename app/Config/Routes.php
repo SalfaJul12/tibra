@@ -11,7 +11,7 @@ $routes->get('/', 'Home::index');
 $routes->get('kategori', 'Home::kategori');
 $routes->get('detail', 'Home::detail');
 $routes->get('about', 'Home::about');
-$routes->get('shopnow', 'Home::shopnow');
+$routes->get('home/shopnow', 'Home::shopnow');
 
 //Auth
 $routes->get('login', 'AuthController::index');
@@ -64,4 +64,8 @@ $routes->get('home/history', 'Home::history');
 $routes->post('pembelian/simpan', 'PembelianController::simpan');
 
 //Cart
-$routes->get('cart', 'Home::cart');
+$routes->get('/cart', 'CartController::index');
+$routes->post('/cart/add/', 'CartController::add/$1');
+$routes->post('/cart/update/(:num)', 'CartController::update/$1');
+$routes->get('/cart/delete/(:num)', 'CartController::delete/$1');
+

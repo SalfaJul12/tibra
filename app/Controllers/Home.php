@@ -1,20 +1,39 @@
 <?php
 
 namespace App\Controllers;
-
 use App\Models\ProdukModel;
+use App\Models\DiskonModel;
+use App\Models\UserModel;
+use App\Models\PembelianModel;
+use App\Models\CartModel;
 
 class Home extends BaseController
 {
+    protected $produkModel;
+    protected $diskonModel;
+    protected $userModel;
+    protected $cartModel;
+    protected $id_user;
+
+    public function __construct()
+    {
+        $this->produkModel = new \App\Models\ProdukModel();
+        $this->diskonModel = new DiskonModel();
+        $this->userModel = new UserModel();
+        $this->cartModel = new CartModel();
+        helper(['form', 'url']);
+        $this->id_user = session()->get('id_user');
+    }
+
     public function index(): string
     {
-        return view('index');
+        $data['cart'] = $this->cartModel->where('id_user', $this->id_user)->findAll();
+        return view('index', $data);
     }
 
     public function kategori()
     {
         $produkModel = new ProdukModel();
-
         $keyword = $this->request->getGet('keyword');
 
         if ($keyword) {
@@ -30,6 +49,7 @@ class Home extends BaseController
             'produk' => $produk,
             'keyword' => $keyword
         ];
+        $data['cart'] = $this->cartModel->where('id_user', $this->id_user)->findAll();
 
         return view('kategori', $data);
     }
@@ -55,24 +75,52 @@ class Home extends BaseController
         return view('detail', ['produk' => $produk]);
     }
 
-    public function shopnow($id = null): string
+    public function shopnow()
     {
-        if ($id === null) {
-            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('ID Produk tidak ditemukan.');
+        $id_user = session()->get('id_user');
+
+        if (!$id_user) {
+            return redirect()->to('/login')->with('error', 'Silakan login untuk checkout');
+        }
+            $db = \Config\Database::connect();
+            $cartItems = $db->table('cart')
+                ->select('cart.*, produk.photo_produk','produk.type_produk')
+                ->join('produk', 'cart.id_produk = produk.id_produk')
+                ->where('cart.id_user', $id_user)
+                ->get()
+                ->getResultArray();
+        if (empty($cartItems)) {
+            return redirect()->to('/')->with('error', 'Keranjang Anda kosong');
         }
 
-        $produkModel = new ProdukModel();
-        $produk = $produkModel->find($id);
-
-        if (!$produk) {
-            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Produk tidak ditemukan.");
-        }
-
-        // Simpan produk ke session untuk digunakan di checkout
-        session()->set('produk_checkout', $produk);
-
-        return view('shopnow', ['produk' => $produk]);
+        return view('shopnow', ['cartItems' => $cartItems]);
     }
+
+    // public function shopnow($id = null): string
+    // {
+    //     if ($id === null) {
+    //         throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('ID Produk tidak ditemukan.');
+    //     }
+        
+    //     $cartModel = new \App\Models\CartModel();
+    //     $id_user = session()->get('id_user');
+    //     $cartItems = $cartModel->where('id_user', $id_user)->findAll();
+    //     if (empty($cartItems)) {
+    //         return redirect()->to('/')->with('error', 'Keranjang Anda kosong');
+    //     }
+        
+    //     $produkModel = new ProdukModel();
+    //     $produk = $produkModel->find($id);
+
+    //     if (!$produk) {
+    //         throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Produk tidak ditemukan.");
+    //     }
+
+    //     // Simpan produk ke session untuk digunakan di checkout
+    //     session()->set('produk_checkout', $produk);
+
+    //     return view('shopnow', ['produk' => $produk]);
+    // }
 
     // // ✅ Proses setelah klik "Finish Payment"
     // public function finishPayment()
