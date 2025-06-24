@@ -166,23 +166,24 @@
 <!-- Menu Bar -->
 <div class="menu-bar">
   <div class="container">
-    <ul class="d-flex align-items-center">
-      <li><a href="<?= base_url('/') ?>">Beranda</a></li>
-      <li><a href="<?= base_url('kategori') ?>">Kategori</a></li>
-      <li><a href="<?= base_url('about') ?>">Tentang</a></li>
-      <li class="ms-auto d-flex align-items-center">
-          <button class="btn btn-link text-white ms-2" id="hamburgerBtn">
-            <?php 
-              $session = \Config\Services::session();
-              if (!$session->get('logged_in')): ?>
-                <!-- Jika belum login -->
-              <?php else: ?>
-                <!-- Jika sudah login -->
-                <button class="dropdown-item" onclick="toggleCart()" style="width:10px;"><i class="fas fa-shopping-cart"></i></button>
-              <?php endif; ?>
+    <div class="row align-items-center">
+      <div class="col-12 col-md-auto mb-2 mb-md-0">
+        <ul class="d-flex flex-wrap align-items-center mb-0">
+          <li class="me-3"><a href="#">Beranda</a></li>
+          <li class="me-3"><a href="<?= base_url('kategori') ?>">Kategori</a></li>
+          <li class="me-3"><a href="<?= base_url('about') ?>">Tentang</a></li>
+        </ul>
+      </div>
+      <div class="col">
+      </div>
+      <div class="col-auto d-flex align-items-center">
+        <?php if ($session->get('logged_in')): ?>
+          <button class="btn btn-outline-light" onclick="toggleCart()">
+            <i class="fas fa-shopping-cart"></i>
           </button>
-      </li>
-    </ul>
+        <?php endif; ?>
+      </div>
+    </div>
   </div>
 </div>
 

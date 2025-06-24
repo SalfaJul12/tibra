@@ -12,11 +12,11 @@ $routes->get('kategori', 'Home::kategori');
 $routes->get('detail', 'Home::detail');
 $routes->get('about', 'Home::about');
 $routes->get('home/shopnow', 'Home::shopnow');
+$routes->get('home/shipping', 'Home::shipping');
 
 //Auth
 $routes->get('login', 'AuthController::index');
 $routes->get('register', 'AuthController::register');
-$routes->get('forpas', 'AuthController::forpas');
 $routes->get('change', 'AuthController::changepass');
 //Login System
 $routes->get('/register', 'AuthController::register');
@@ -47,7 +47,9 @@ $routes->get('profile', 'Profile::index');
 $routes->post('profile/update', 'Profile::update');
 
 //Report
-$routes->get('report', 'AdminController::report');
+$routes->get('/transaksi', 'TransaksiController::index');
+$routes->get('/report', 'TransaksiController::index');
+$routes->get('/transaksi/delete/(:num)', 'TransaksiController::delete/$1');
 
 // produk
 $routes->get('/home/detail/(:num)', 'Home::detail/$1');
@@ -55,6 +57,7 @@ $routes->get('/home/shopnow/(:num)', 'Home::shopnow/$1');
 
 // Shipping
 $routes->post('/home/finishPayment', 'Home::finishPayment');
+
 // Shipping dan History
 $routes->get('shipping', 'Home::shipping'); // <== ini penting untuk menghindari 404
 $routes->get('history', 'Home::history');
@@ -69,3 +72,11 @@ $routes->post('/cart/add/', 'CartController::add/$1');
 $routes->post('/cart/update/(:num)', 'CartController::update/$1');
 $routes->get('/cart/delete/(:num)', 'CartController::delete/$1');
 
+//OTP Forget Password
+$routes->get('forgot-password', 'AuthController::forpas');
+$routes->post('forgot-password', 'AuthController::forgotPasswordProcess');
+
+$routes->post('verify-otp', 'AuthController::verifyOtpProcess');
+
+$routes->get('reset-password', 'AuthController::showResetPasswordForm');
+$routes->post('reset-password', 'AuthController::resetPasswordProcess');

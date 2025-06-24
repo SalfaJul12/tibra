@@ -144,13 +144,13 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Laporan Penjualan (WIP)</h1>
+                    <div class="d-sm-flex align-items-center justify-content-between">
+                        <h1 class="h3 mb-0 text-gray-800">Laporan Penjualan</h1>
                     </div>
 
                     <!-- Content Row -->
                     <div class="row">
-                        <div class="container my-5">
+                        <div class="container">
 
                             <div class="card shadow-lg">
                             <div class="card-body">
@@ -166,30 +166,22 @@
                                     <th scope="col" class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
-
-
-
-<tbody>
-    <?php foreach ($pembelian as $i => $row): ?>
-        <tr>
-            <td><?= $i + 1 ?></td>
-            <td><?= esc($row['fullname']) ?></td>
-            <td><?= esc($row['email']) ?></td>
-            <td><?= esc($row['nama_produk']) ?></td>
-            <td><?= number_format($row['harga_produk'], 0, ',', '.') ?></td>
-            <td><?= date('Y-m-d H:i:s', strtotime($row['tanggal_pembelian'])) ?></td>
-            <td class="text-center">
-                <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalUser">Edit</button>
-                <button class="btn btn-sm btn-danger">Hapus</button>
-            </td>
-        </tr>
-    <?php endforeach; ?>
-</tbody>
-
-
-
-
-
+                                <tbody>
+                                    <?php foreach ($pembelian as $i => $row): ?>
+                                        <tr>
+                                            <td><?= $i + 1 ?></td>
+                                            <td><?= esc($row['fullname']) ?></td>
+                                            <td><?= esc($row['email']) ?></td>
+                                            <td><?= esc($row['nama_produk']) ?></td>
+                                            <td><?= number_format($row['harga_produk'], 0, ',', '.') ?></td>
+                                            <td><?= date('Y-m-d H:i:s', strtotime($row['tanggal_pembelian'])) ?></td>
+                                            <td class="text-center">
+                                                <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalUser">Edit</button>
+                                                <button class="btn btn-sm btn-danger">Hapus</button>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
                                 </table>
                             </div>
                             </div>

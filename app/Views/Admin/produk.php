@@ -144,13 +144,13 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <div class="d-sm-flex align-items-center justify-content-between">
                         <h1 class="h3 mb-0 text-gray-800">Daftar Produk</h1>
                     </div>
 
                     <!-- Content Row -->
-                    <div class="row">
-                        <div class="container my-5">
+                    <div class="row gx-0 gy-0">
+                        <div class="container my-2">
                             <?php if(session()->getFlashdata('success')): ?>
                                 <p style="color:green;"><?= session()->getFlashdata('success') ?></p>
                             <?php endif; ?>
@@ -161,52 +161,60 @@
                             </div>
 
                             <div class="card shadow-lg">
-                            <div class="card-body">
-                                <table class="table table-bordered table-hover table-striped align-middle">
-                                <thead class="table-primary">
-                                    <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Nama Produk</th>
-                                    <th scope="col">Harga</th>
-                                    <th scope="col">Deskripsi</th>
-                                    <th scope="col">Tipe</th>
-                                    <th scope="col">Merek</th>
-                                    <th scope="col">Jumlah</th>
-                                    <th scope="col">Image</th>
-                                    <th scope="col">Tahun Pembuatan</th>
-                                    <th scope="col" class="text-center">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($produk as $p): ?>
+                                <div class="card-body">
+                                    <div style="max-height: 400px; overflow-y: auto;">
+                                    <table class="table table-bordered table-hover table-striped align-middle">
+                                        <thead class="table-primary">
                                         <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Nama Produk</th>
+                                            <th scope="col">Harga</th>
+                                            <th scope="col">Deskripsi</th>
+                                            <th scope="col">Tipe</th>
+                                            <th scope="col">Merek</th>
+                                            <th scope="col">Jumlah</th>
+                                            <th scope="col">Image</th>
+                                            <th scope="col">Tahun Pembuatan</th>
+                                            <th scope="col" class="text-center">Aksi</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php foreach ($produk as $p): ?>
+                                            <tr>
                                             <td><?= $p['id_produk'] ?></td>
                                             <td><?= esc($p['nama_produk']) ?></td>
                                             <td>Rp <?= number_format($p['harga_produk'], 0, ',', '.') ?></td>
                                             <td><?= esc($p['deskripsi_produk']) ?></td>
                                             <td><?= esc($p['type_produk']) ?></td>
                                             <td><?= esc($p['merk_produk']) ?></td>
-                                            <td><?= esc($p['jumlah']) ?> pcs</td>
                                             <td>
-                                                <?php if($p['photo_produk']): ?>
-                                                    <img src="/uploads/<?= esc($p['photo_produk']) ?>" width="80">
+                                                <?php if ($p['jumlah'] <= 0): ?>
+                                                <span class="badge bg-danger">SOLD OUT</span>
                                                 <?php else: ?>
-                                                    -
+                                                <?= esc($p['jumlah']) ?> pcs
+                                                <?php endif; ?>
+                                            </td>
+                                            <td>
+                                                <?php if ($p['photo_produk']): ?>
+                                                <img src="/uploads/<?= esc($p['photo_produk']) ?>" width="80">
+                                                <?php else: ?>
+                                                -
                                                 <?php endif; ?>
                                             </td>
                                             <td><?= esc($p['tahun_pembuatan']) ?></td>
                                             <td class="text-center">
-                                                <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalEditProduk<?= $p['id_produk'] ?>">Edit</button>
+                                                <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalEditProduk<?= $p['id_produk'] ?>">Edit</button>
                                                 <a href="delete/<?= $p['id_produk'] ?>" onclick="return confirm('Hapus produk ini?')">
-                                                    <button class="btn btn-sm btn-danger">Hapus</button></a>
+                                                <button class="btn btn-sm btn-danger">Hapus</button>
+                                                </a>
                                             </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                                </table>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                </div>
                             </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <!-- /.container-fluid -->

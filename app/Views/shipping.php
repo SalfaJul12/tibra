@@ -64,15 +64,31 @@
 
     <div class="row">
       <div class="col-md-6">
-<p><strong>Produk:</strong> <?= esc($checkout['produk']['nama_produk']) ?></p>
-<p><strong>Tipe:</strong> <?= esc($checkout['produk']['type_produk']) ?></p>
-<p><strong>Harga:</strong> Rp. <?= number_format($checkout['produk']['harga_produk'], 0, ',', '.') ?></p>
-<p><strong>Metode Pembayaran:</strong> <?= strtoupper($checkout['metode_pembayaran']) ?></p>
-<p><strong>Ekspedisi:</strong> <?= strtoupper($checkout['pengiriman']) ?></p>
+        <p><strong>Daftar Produk:</strong></p>
+        <ul>
+          <?php if (isset($checkout['cartItems']) && is_array($checkout['cartItems'])): ?>
+            <?php foreach ($checkout['cartItems'] as $item): ?>
+              <li>
+                <?= esc($item['nama_produk']) ?>
+                <?php if (isset($item['type_produk'])): ?>
+                  (<?= esc($item['type_produk']) ?>)
+                <?php endif; ?>
+                - Rp <?= number_format($item['harga_produk']) ?>
+              </li>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <li>Tidak ada data produk.</li>
+          <?php endif; ?>
+        </ul>
+        <p><strong>Metode Pembayaran:</strong> <?= strtoupper(esc($checkout['metode_pembayaran'] ?? '-')) ?></p>
+        <p><strong>Ekspedisi:</strong> <?= strtoupper(esc($checkout['pengiriman'] ?? '-')) ?></p>
       </div>
       <div class="col-md-6 text-center">
-        <img src="/uploads/<?= esc($checkout['produk']['photo_produk']) ?>" class="img-fluid rounded" style="width: 120px;" alt="Produk">
-
+        <?php if (isset($checkout['cartItems'][0]['photo_produk'])): ?>
+          <img src="/uploads/<?= esc($checkout['cartItems'][0]['photo_produk']) ?>" class="img-fluid rounded" style="width: 120px;" alt="Produk">
+        <?php else: ?>
+          <p>Gambar produk tidak tersedia.</p>
+        <?php endif; ?>
       </div>
     </div>
 

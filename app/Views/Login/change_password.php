@@ -20,20 +20,25 @@
 
   <div class="card">
     <div class="login-form">
-        <p class="title-login" style="color: white;">CHANGE PASSWORD</p>
-            <form action="change_password.html" method="">
-                <div class="field" style="color: white; margin-bottom: 10%;">
-                    <label>New Password</label>
-                    <input type="password" placeholder="Masukkan Password Baru">
-                </div>
-                <div class="field" style="color: white;">
-                    <label>Re-New Password</label>
-                    <input type="password" placeholder="Masukkan Password Baru">
-                </div>
-                <input type="submit" value="CHANGE PASWWORD">
+        <?php if (session()->getFlashdata('error')): ?>
+        <div class="alert alert-danger">
+          <?= session()->getFlashdata('error') ?>
+        </div>
+        <?php endif; ?>
+        <p class="title-login" style="color: black;">CHANGE PASSWORD</p>
+            <form action="<?= base_url('reset-password') ?>" method="post">
+              <div class="field" style="color: black; margin-bottom: 10%;">
+                <label>New Password</label>
+                <input type="password" name="password" placeholder="Masukkan Password Baru" required>
+              </div>
+              <div class="field" style="color: black;">
+                <label>Re-New Password</label>
+                <input type="password" name="re_password" placeholder="Masukkan Password Baru" required>
+              </div>
+              <input type="submit" value="CHANGE PASSWORD">
             </form>
             <div class="sign">
-                <a href="login">Back to login</a></span>
+                <a href="login" style="color:blue; text-decoration:none;">Back to login</a></span>
             </div>
     </div>
     </div>

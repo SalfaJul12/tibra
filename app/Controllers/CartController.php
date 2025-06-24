@@ -22,7 +22,7 @@ class CartController extends BaseController
         return view('cart/index', $data);
     }
 
-    public function add()
+public function add()
     {
         $id_produk = $this->request->getPost('id_produk');
         $qty = $this->request->getPost('qty');
@@ -33,8 +33,11 @@ class CartController extends BaseController
 
         $produk = $this->produkModel->find($id_produk);
         if ($produk) {
+            $id_user = session()->get('id_user');
+
             $existing = $this->cartModel
                 ->where('id_produk', $id_produk)
+                ->where('id_user', $id_user)
                 ->first();
 
             if ($existing) {
@@ -47,7 +50,7 @@ class CartController extends BaseController
                 ]);
             } else {
                 $this->cartModel->save([
-                    'id_user' => $this->id_user = session()->get('id_user'), 
+                    'id_user' => $id_user, 
                     'id_produk' => $produk['id_produk'],
                     'nama_produk' => $produk['nama_produk'],
                     'harga_produk' => $produk['harga_produk'],

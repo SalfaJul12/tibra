@@ -144,49 +144,50 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <div class="d-sm-flex align-items-center justify-content-between">
                         <h1 class="h3 mb-0 text-gray-800">Daftar User</h1>
                     </div>
 
                     <!-- Content Row -->
                     <div class="row">
-                        <div class="container my-5">
+                        <div class="container my-2">
                             <div class="card shadow-lg">
                             <div class="card-body">
-
-                                <table class="table table-bordered table-hover table-striped align-middle">
-                                <thead class="table-primary">
-                                    <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Fullname</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Password</th>
-                                    <th scope="col">Address</th>
-                                    <th scope="col">Tipe</th>
-                                    <th scope="col" class="text-center">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <?php foreach ($user as $us): ?>
-                                    <tr>
-                                    <td><?= esc($us['id_user']) ?></td>
-                                    <td><?= esc($us['fullname']) ?></td>
-                                    <td><?= esc($us['email']) ?></td>
-                                    <td>*******</td>
-                                    <td><?= esc($us['address']) ?></td>
-                                    <td><?= esc($us['role']) ?></td>
-                                    <td class="text-center">
-                                        <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalUser<?= esc($us['id_user']) ?>">
-                                            Edit
-                                        </button>
-                                        <a href="user/delete/<?= esc($us['id_user']) ?>" onclick="return confirm('Hapus produk ini?')">
-                                        <button class="btn btn-sm btn-danger">Hapus</button></a>
-                                    </td>
-                                    </tr>
-                                    <!-- Tambahkan baris lain sesuai kebutuhan -->
-                                <?php endforeach; ?>
-                                </tbody>
-                                </table>
+                                <div style="max-height: 400px; overflow-y: auto;">
+                                    <table class="table table-bordered table-hover table-striped align-middle">
+                                        <thead class="table-primary">
+                                            <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Fullname</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Password</th>
+                                            <th scope="col">Address</th>
+                                            <th scope="col">Tipe</th>
+                                            <th scope="col" class="text-center">Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php foreach ($user as $us): ?>
+                                            <tr>
+                                            <td><?= esc($us['id_user']) ?></td>
+                                            <td><?= esc($us['fullname']) ?></td>
+                                            <td><?= esc($us['email']) ?></td>
+                                            <td>*******</td>
+                                            <td><?= esc($us['address']) ?></td>
+                                            <td><?= esc($us['role']) ?></td>
+                                            <td class="text-center">
+                                                <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalUser<?= esc($us['id_user']) ?>">
+                                                    Edit
+                                                </button>
+                                                <a href="user/delete/<?= esc($us['id_user']) ?>" onclick="return confirm('Hapus produk ini?')">
+                                                <button class="btn btn-sm btn-danger">Hapus</button></a>
+                                            </td>
+                                            </tr>
+                                            <!-- Tambahkan baris lain sesuai kebutuhan -->
+                                        <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             </div>
                         </div>

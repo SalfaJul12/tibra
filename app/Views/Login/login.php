@@ -23,7 +23,12 @@
 
   <div class="card">
     <div class="login-form">
-        <p class="title-login" style="color: black;">LOGIN</p>
+      <?php if (session()->getFlashdata('error')): ?>
+      <div class="alert alert-danger">
+        <?= session()->getFlashdata('error') ?>
+      </div>
+      <?php endif; ?>
+      <p class="title-login" style="color: black;">LOGIN</p>
         <form method="post" action="/check">
         <div class="field" style="color: black;">
             <label>Email Adress</label>
@@ -36,7 +41,7 @@
         </div>
 
         <div class="forgot-register">
-            <span><a href="kanjut" style="color: black;">Forgot Password?</a></span>
+            <span><a href="forgot-password" style="color: black;">Forgot Password?</a></span>
         </div>
 
         <input type="submit" value="LOGIN">

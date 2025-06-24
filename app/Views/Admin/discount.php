@@ -142,14 +142,11 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Diskon</h1>
-                    <p class="mb-4">Halaman ini berisi informasi diskon produk.</p>
-
-                    <!-- DataTales Example -->
-                        <div class="row">
-                        <div class="container my-5">
+                    <h1 class="h3 text-gray-800">Diskon</h1>
+                    <p>Halaman ini berisi informasi diskon produk.</p>
+                    <div class="row">
+                        <div class="container">
                             <div class="d-flex justify-content-between mb-3">
                                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalTambahDiskon">
                                     <i class="fas fa-plus-circle"></i> Tambah Diskon
@@ -157,7 +154,8 @@
                             </div>
                             <div class="card shadow-lg">
                                 <div class="card-body">
-                                    <table class="table table-bordered table-hover table-striped align-middle">
+                                    <div style="max-height: 400px; overflow-y: auto;">
+                                        <table class="table table-bordered table-hover table-striped align-middle">
                                         <thead class="table-primary">
                                             <tr>
                                                 <th scope="col">ID</th>
@@ -182,13 +180,13 @@
                                                 </tr>
                                             <?php endforeach; ?>
                                             </tbody>
-                                            </table>
-                                            </div>
-                                            </div>
-
-                <!-- /.container-fluid -->
-
-            </div>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             <!-- End of Main Content -->
 
             <!-- Footer -->

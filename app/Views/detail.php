@@ -219,8 +219,13 @@
             <p><strong>Tahun Pembuatan:</strong> <?= esc($produk['tahun_pembuatan']) ?></p>
           </div>
           <div class="col-md-4">
+          <?php if ($produk['jumlah'] <= 0): ?>
+            <p><strong>Stok Tersedia:</strong> <span class="badge bg-danger">SOLD OUT</span></p>
+          <?php else: ?>
             <p><strong>Stok Tersedia:</strong> <?= esc($produk['jumlah']) ?> unit</p>
-          </div>
+          <?php endif; ?>
+        </div>
+
         </div>
       </div>
     </div>

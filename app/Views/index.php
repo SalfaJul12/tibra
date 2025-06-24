@@ -178,153 +178,88 @@
   </div>
 </nav>
 
-  <!-- Menu Bar -->
-  <div class="menu-bar">
-    <div class="container">
-      <ul class="d-flex align-items-center">
-        <li><a href="#">Beranda</a></li>
-        <li><a href="kategori">Kategori</a></li>
-        <li><a href="about">Tentang</a></li>
-        <li class="ms-auto d-flex align-items-center">
-          <form action="<?= base_url('kategori') ?>"></form>
-          <input type="text" placeholder="Search .." />
-          <button class="btn btn-link text-white ms-2" id="hamburgerBtn">
-            <?php 
-              $session = \Config\Services::session();
-              if (!$session->get('logged_in')): ?>
-                <!-- Jika belum login -->
-              <?php else: ?>
-                <!-- Jika sudah login -->
-                 <button class="dropdown-item" onclick="toggleCart()" style="width:10px;"><i class="fas fa-shopping-cart"></i></button>
-              <?php endif; ?>
+<!-- Menu Bar -->
+<div class="menu-bar">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-12 col-md-auto mb-2 mb-md-0">
+        <ul class="d-flex flex-wrap align-items-center mb-0">
+          <li class="me-3"><a href="#">Beranda</a></li>
+          <li class="me-3"><a href="<?= base_url('kategori') ?>">Kategori</a></li>
+          <li class="me-3"><a href="<?= base_url('about') ?>">Tentang</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <form class="d-flex" action="<?= base_url('kategori') ?>" method="get">
+          <input type="text" class="form-control me-2" placeholder="Search .." name="q">
+          <button class="btn btn-light" type="submit"><i class="fas fa-search"></i></button>
+        </form>
+      </div>
+      <div class="col-auto d-flex align-items-center">
+        <?php if ($session->get('logged_in')): ?>
+          <button class="btn btn-outline-light" onclick="toggleCart()">
+            <i class="fas fa-shopping-cart"></i>
           </button>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Main Content -->
-  <div class="container my-4">
-    <div class="row g-3">
-      <div class="col-md-6 col-lg-6">
-        <div class="promo-card d-flex align-items-center">
-          <div class="flex-grow-1">
-            <h5><strong>Best Seller</strong></h5>
-            <p>Get Your Lightning MSi Graphics Cards</p>
-            <a href="shopnow" class="btn btn-light btn-sm">Shop Now</a>
-          </div>
-          <img src="/Assets/img/produk1.jpg" class="promo-img" alt="photo" />
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-6">
-        <div class="promo-card d-flex align-items-center">
-          <div class="flex-grow-1">
-            <h5><strong>Best Collections</strong></h5>
-            <p>Get Your Lightning MSi Graphics Cards</p>
-            <a href="shopnow" class="btn btn-light btn-sm">Shop Now</a>
-          </div>
-          <img src="/Assets/img/produk1.jpg" class="promo-img" alt="photo" />
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-6">
-        <div class="promo-card small d-flex align-items-center">
-          <div class="flex-grow-1" style="margin: 10px;">
-            <h6><strong>Best Rating</strong></h6>
-            <p>Get Your Lightning MSi Graphics Cards</p>
-            <a href="shopnow" class="btn btn-light btn-sm">Shop Now</a>
-          </div>
-          <img src="/Assets/img/produk1.jpg" class="promo-img" alt="photo" style="max-height: 80px;" />
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-6">
-        <div class="promo-card small d-flex align-items-center">
-          <div class="flex-grow-1" style="margin: 10px;">
-            <h6><strong>Best Product</strong></h6>
-            <p>Get Your Lightning MSi Graphics Cards</p>
-            <a href="shopnow" class="btn btn-light btn-sm">Shop Now</a>
-          </div>
-          <img src="/Assets/img/produk1.jpg" class="promo-img" alt="photo" style="max-height: 80px;" />
-        </div>
+        <?php endif; ?>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Best Seller Section -->
-  <div class="container my-4">
-    <h4 class="mb-3">Best Seller</h4>
-    <div class="scrolling-wrapper d-flex flex-nowrap py-3">
-      <div class="card me-3" style="min-width: 50px;">
-        <a href="#" style="text-decoration: none; color: black;">
-          <img src="/Assets/img/produk1.jpg" class="card-img-top" alt="" />
-          <div class="card-body">
-            <p class="card-text">Judul Produk<br /><strong>Rp100.000</strong></p>
+ <!-- Produk Stok Terbatas -->
+<div class="container my-5">
+  <h4 class="mb-4 fw-bold">🔥 Best Collection: Stok Terbatas</h4>
+  <div class="row g-3">
+    <?php if (!empty($produkTerbatas)) : ?>
+      <?php foreach ($produkTerbatas as $promo) : ?>
+        <div class="col-md-6">
+          <div class="card d-flex flex-row shadow h-100">
+            <!-- Kiri: Teks -->
+            <div class="card-body d-flex flex-column justify-content-between w-100">
+              <div>
+                <h5 class="card-title fw-bold text-primary"><?= esc($promo['nama_produk']) ?></h5>
+                <p class="mb-1"><?= esc($promo['merk_produk']) ?> • <?= esc($promo['type_produk']) ?></p>
+                <p class="text-danger">Sisa Stok: <?= esc($promo['jumlah']) ?> pcs</p>
+              </div>
+              <a href="<?= base_url('home/detail/' . $promo['id_produk']) ?>" class="btn btn-sm btn-outline-primary mt-2">Lihat Detail</a>
+            </div>
+            <!-- Kanan: Gambar -->
+            <div class="p-2">
+              <img src="<?= base_url('uploads/' . $promo['photo_produk']) ?>" alt="<?= esc($promo['nama_produk']) ?>" class="img-fluid rounded-end" style="width: 100%; max-width: 120px; height: auto; object-fit: cover;">
+            </div>
           </div>
-        </a>
+        </div>
+      <?php endforeach; ?>
+    <?php else : ?>
+      <div class="col-12">
+        <p class="text-muted">Tidak ada produk dengan stok terbatas saat ini.</p>
       </div>
-
-      <div class="card me-3" style="min-width: 50px;">
-        <a href="#" style="text-decoration: none; color: black;">
-          <img src="/Assets/img/produk1.jpg" class="card-img-top" alt="" />
-          <div class="card-body">
-            <p class="card-text">Judul Produk<br /><strong>Rp100.000</strong></p>
-          </div>
-        </a>
-      </div>
-
-      <div class="card me-3" style="min-width: 50px;">
-        <a href="#" style="text-decoration: none; color: black;">
-          <img src="/Assets/img/produk1.jpg" class="card-img-top" alt="" />
-          <div class="card-body">
-            <p class="card-text">Judul Produk<br /><strong>Rp100.000</strong></p>
-          </div>
-        </a>
-      </div>
-      
-    </div>
+    <?php endif; ?>
   </div>
+</div>
 
-  <!-- Popular Item Section -->
-  <div class="container my-4">
-    <h4 class="mb-3">Popular Item</h4>
-    <div class="scrolling-wrapper d-flex flex-nowrap py-3">
-      <div class="card me-3" style="min-width: 200px;">
-        <a href="#" style="text-decoration: none; color: black;">
-          <img src="/Assets/img/produk1.jpg" class="card-img-top" alt="" />
-          <div class="card-body">
-            <p class="card-text">Judul Produk<br /><strong>Rp100.000</strong></p>
+
+
+<!-- Daftar Semua Produk -->
+<div class="container my-5">
+  <h4 class="mb-4">Semua Produk</h4>
+  <div class="row">
+    <?php foreach ($produk as $item) : ?>
+      <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+        <div class="card h-100 d-flex flex-column">
+          <img src="<?= base_url('uploads/' . $item['photo_produk']) ?>" class="card-img-top img-fluid" alt="<?= esc($item['nama_produk']) ?>" style="object-fit: cover; height: 200px;">
+          <div class="card-body d-flex flex-column">
+            <h6 class="card-title mb-1"><?= esc($item['nama_produk']) ?></h6>
+            <p class="card-text text-muted mb-1"><?= esc($item['merk_produk']) ?> - <?= esc($item['type_produk']) ?></p>
+            <p class="card-text fw-bold text-primary">Rp <?= number_format($item['harga_produk'], 0, ',', '.') ?></p>
+            <a href="<?= base_url('home/detail/' . $item['id_produk']) ?>" class="btn btn-sm btn-outline-primary mt-auto">Lihat Detail</a>
           </div>
-        </a>
+        </div>
       </div>
-
-      <div class="card me-3" style="min-width: 200px;">
-        <a href="#" style="text-decoration: none; color: black;">
-          <img src="/Assets/img/produk1.jpg" class="card-img-top" alt="" />
-          <div class="card-body">
-            <p class="card-text">Judul Produk<br /><strong>Rp100.000</strong></p>
-          </div>
-        </a>
-      </div>
-
-            <div class="card me-3" style="min-width: 200px;">
-        <a href="#" style="text-decoration: none; color: black;">
-          <img src="/Assets/img/produk1.jpg" class="card-img-top" alt="" />
-          <div class="card-body">
-            <p class="card-text">Judul Produk<br /><strong>Rp100.000</strong></p>
-          </div>
-        </a>
-      </div>
-
-      <div class="card me-3" style="min-width: 200px;">
-        <a href="#" style="text-decoration: none; color: black;">
-          <img src="/Assets/img/produk1.jpg" class="card-img-top" alt="" />
-          <div class="card-body">
-            <p class="card-text">Judul Produk<br /><strong>Rp100.000</strong></p>
-          </div>
-        </a>
-      </div>
-
-    </div>
+    <?php endforeach; ?>
   </div>
+</div>
+
 
   <!-- Footer -->
   <footer class="text-white text-center p-4">
@@ -367,7 +302,16 @@
                   <?php $grand_total += $item['harga_total']; ?>
               <?php endforeach; ?>
               <hr>
-              <h5 class="text-right">Total: Rp<?= number_format($grand_total) ?></h5>
+              <table>
+                <tr>
+                  <td><h7>Alamat : <?= esc($session->get('address')) ?> <a href="<?= base_url('profile') ?>" style="text-decoration:none;">
+                    Ubah
+                  </a></h7></td>
+                </tr>
+                <tr>
+                  <td><h5 class="text-right">Total: Rp<?= number_format($grand_total) ?></h5></td>
+                </tr>
+              </table>
               <a href="<?= base_url('home/shopnow/') ?>"><button class="btn btn-success btn-block"><i class="fas fa-credit-card">
               </i> Checkout</button></a>
           <?php else : ?>
@@ -386,6 +330,12 @@
       document.getElementById('cartSidebar').classList.toggle('open');
     }
   </script>
+  <?php if (session()->getFlashdata('error')): ?>
+  <script>
+      alert("<?= esc(session()->getFlashdata('error')) ?>");
+  </script>
+  <?php endif; ?>
+
   <script>
     function toggleProfileSidebar() {
       const sidebar = document.getElementById('profileSidebar');

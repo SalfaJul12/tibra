@@ -178,17 +178,27 @@
 </nav>
   <!-- Menu Bar -->
   <div class="menu-bar">
-    <div class="container">
-      <ul class="d-flex align-items-center">
-        <li><a href="/">Beranda</a></li>
-        <li><a href="kategori">Kategori</a></li>
-        <li><a href="about">Tentang</a></li>
-        <li class="ms-auto d-flex align-items-center">
-          <form action="<?= base_url('kategori') ?>"><input type="text" placeholder="Search .." /></form>
-        </li>
-      </ul>
+  <div class="container">
+    <div class="row align-items-center">
+      <!-- Menu link -->
+      <div class="col-12 col-md-auto mb-2 mb-md-0">
+        <ul class="d-flex flex-wrap align-items-center mb-0">
+          <li class="me-3"><a href="/">Beranda</a></li>
+          <li class="me-3"><a href="<?= base_url('kategori') ?>">Kategori</a></li>
+          <li class="me-3"><a href="<?= base_url('about') ?>">Tentang</a></li>
+        </ul>
+      </div>
+
+      <!-- Search form -->
+      <div class="col">
+        <form action="<?= base_url('kategori') ?>" method="get" class="d-flex">
+          <input type="text" class="form-control me-2" name="q" placeholder="Search .." />
+          <button class="btn btn-light" type="submit"><i class="fas fa-search"></i></button>
+        </form>
+      </div>
     </div>
   </div>
+</div>
 
   <!-- About Content -->
   <div class="about">

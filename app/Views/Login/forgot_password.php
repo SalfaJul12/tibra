@@ -20,23 +20,30 @@
 
   <div class="card">
     <div class="login-form">
+        <?php if (session()->getFlashdata('error')): ?>
+        <div class="alert alert-danger">
+          <?= session()->getFlashdata('error') ?>
+        </div>
+        <?php endif; ?>
         <p class="title-login" style="color: black;">FORGOT PASSWORD</p>
-        <form action="change" method="">
-            <div class="field" style="color: black;">
-                <label>Email Adress</label>
-                <input type="email" placeholder="Masukkan Email">
-            </div>
-            <input style="display: flex;" type="submit" value="SEND">
+        <form action="<?= base_url('forgot-password') ?>" method="post">
+          <div class="field" style="color: black;">
+            <label>Email Address</label>
+            <input type="email" name="email" placeholder="Masukkan Email" required>
+          </div>
+          <input style="display: flex;" type="submit" value="SEND">
         </form>
 
-            <div class="field" style="color: black;">
-                <label>OTP</label>
-                <input type="text" placeholder="Masukan OTP">
-            </div>
-
-            <div class="sign">
-                <span style="color: black;">Already have account?<a href="login" style="color:blue; text-decoration:none;"> Login Here</a></span>
-            </div>
+        <form action="<?= base_url('verify-otp') ?>" method="post">
+          <div class="field" style="color: black;">
+            <label>OTP</label>
+            <input type="text" name="otp" placeholder="Masukkan OTP" required>
+          </div>
+          <input type="submit" value="VERIFY OTP">
+        </form>
+        <div class="sign">
+          <span style="color: black;">Already have account?<a href="login" style="color:blue; text-decoration:none;"> Login Here</a></span>
+        </div>
     </div>
     </div>
 

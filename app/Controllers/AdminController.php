@@ -33,6 +33,11 @@ class AdminController extends BaseController
         if (!session()->get('logged_in')) {
             return redirect()->to('/login');
         }
+
+        if(session()->get('role') !== 'Admin'){
+            return redirect()->to('/')->with('error', 'Halaman tidak ditemukan');
+        }
+
         $db = \Config\Database::connect();
         $data['log'] = $db->table('log')->orderBy('created_at', 'DESC')->get()->getResultArray();
 
@@ -41,12 +46,18 @@ class AdminController extends BaseController
 
     public function produk()
     {
+        if(session()->get('role') !== 'Admin'){
+            return redirect()->to('/')->with('error', 'Halaman tidak ditemukan');
+        }
         $data['produk'] = $this->produkModel->findAll();
         return view('Admin/produk.php', $data);
     }
 
     public function diskon()
     {
+        if(session()->get('role') !== 'Admin'){
+            return redirect()->to('/')->with('error', 'Halaman tidak ditemukan');
+        }
         // Ambil data produk dan diskon
         $data['produk'] = $this->produkModel->findAll();
         $data['diskon'] = $this->diskonModel->getDiskonWithProduk();
@@ -57,12 +68,18 @@ class AdminController extends BaseController
 
     public function user()
     {
+        if(session()->get('role') !== 'Admin'){
+            return redirect()->to('/')->with('error', 'Halaman tidak ditemukan');
+        }
         $data['user'] = $this->userModel->findAll();
         return view('Admin/user.php',$data);
     }
 
     public function update_user($id)
     {
+        if(!session()->get('role') !== 'Admin'){
+            return redirect()->to('/')->with('error', 'Halaman tidak ditemukan');
+        }
         if(!$this->validate([
             'fullname' => 'required',
             'email' => 'required'
@@ -81,17 +98,24 @@ class AdminController extends BaseController
 
     public function delete_user($id)
     {
+        if(!session()->get('role') !== 'Admin'){
+            return redirect()->to('/')->with('error', 'Halaman tidak ditemukan');
+        }
         $user = $this->userModel->find($id);
         $this->userModel->delete($id);
         return redirect()->to('/user')->with('success', 'Produk berhasil dihapus.');
     }
 
-    public function report()
-    {
-        $pembelianModel = new \App\Models\PembelianModel(); // panggil model
-        $data['pembelian'] = $pembelianModel->getLaporanPembelian(); // ambil datanya
-        return view('Admin/report', $data); // kirim ke view
-    }
+public function transaksi()
+{
+        if(session()->get('role') !== 'Admin'){
+            return redirect()->to('/')->with('error', 'Halaman tidak ditemukan');
+        }
+    $transaksiModel = new \App\Models\TransaksiModel();
+    $data['transaksi'] = $transaksiModel->findAll();
+
+    return view('admin/transaksi', $data);
+}
 
 
     public function store()

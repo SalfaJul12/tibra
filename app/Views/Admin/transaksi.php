@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>TIBRA - Dashboard</title>
+    <title>TIBRA - PRODUCT</title>
 
     <!-- Custom fonts for this template-->
     <link href="admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -32,15 +32,15 @@
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard">
-                <div class="sidebar-brand-text mx-3">TIBRA <sup>v1.00</sup></div>
+                <div class="sidebar-brand-text mx-3">TIBRA <sup>v0.01</sup></div>
             </a>
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="">
+            <li class="nav-item">
+                <a class="nav-link" href="dashboard">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -54,19 +54,19 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
+            <li class="nav-item active">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+                    aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Data Setting</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">List Data:</h6>
                         <a class="collapse-item" href="produk">Produk</a>
                         <a class="collapse-item" href="diskon">Discount</a>
                         <a class="collapse-item" href="user">User</a>
-                        <a class="collapse-item" href="transaksi">Report</a>
+                        <a class="collapse-item active" href="report">Report</a>
                     </div>
                 </div>
             </li>
@@ -124,6 +124,10 @@
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
+                                <a class="dropdown-item" href="dashboard">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Activity Log
+                                </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="login" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -133,7 +137,6 @@
                         </li>
 
                     </ul>
-
                 </nav>
                 <!-- End of Topbar -->
 
@@ -142,43 +145,70 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Laporan Penjualan</h1>
                     </div>
 
                     <!-- Content Row -->
                     <div class="row">
-                        <div class="container">
-                            <h3 class="mb-4 text-center">Activity Logs</h3>
-                            <div class="card shadow-sm">
+                        <div class="container my-3">
+                            <div class="card shadow-lg">
                                 <div class="card-body">
                                     <div style="max-height: 400px; overflow-y: auto;">
-                                        <table class="table table-bordered table-hover table-striped">
-                                            <thead class="table-dark">
-                                                <tr>
-                                                <th scope="col">No</th>
-                                                <th scope="col">Nama Admin</th>
-                                                <th scope="col">Activity</th>
-                                                <th scope="col">Created_at</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php $i = 1; foreach($log as $row): ?>
-                                                <tr>
-                                                    <td><?= $i++ ?></td>
-                                                    <td><?= esc($row['fullname'] ?? 'Tidak Ada Nama') ?></td>
-                                                    <td><?= esc($row['activity']) ?></td>
-                                                    <td><?= esc($row['created_at']) ?></td>
-                                                </tr>
-                                                <?php endforeach ?>
-                                                <!-- Tambah baris lain sesuai kebutuhan -->
-                                            </tbody>
-                                        </table>
+                                    <table class="table table-bordered table-hover table-striped align-middle">
+                                        <thead class="table-primary">
+                                            <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Nama</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Produk</th>
+                                            <th scope="col">Total</th>
+                                            <th scope="col">Tanggal</th>
+                                            <th scope="col" class="text-center">Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php foreach ($pembelian as $i => $row): ?>
+                                            <?php 
+                                            $cartItems = json_decode($row['cartItems'], true);
+                                            ?>
+                                            <tr>
+                                            <td><?= $i + 1 ?></td>
+                                            <td><?= esc($row['fullname']) ?></td>
+                                            <td><?= esc($row['email']) ?></td>
+                                            <td>
+                                                <ul class="mb-0">
+                                                <?php foreach ($cartItems as $item): ?>
+                                                    <li><?= esc($item['nama_produk']) ?> (<?= esc($item['qty']) ?>x)</li>
+                                                <?php endforeach; ?>
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                Rp 
+                                                <?php 
+                                                $total = 0;
+                                                foreach ($cartItems as $item) {
+                                                    $total += $item['harga_produk'] * $item['qty'];
+                                                }
+                                                echo number_format($total, 0, ',', '.');
+                                                ?>
+                                            </td>
+                                            <td><?= date('Y-m-d H:i:s', strtotime($row['created_at'])) ?></td>
+                                                <td class="text-center">
+                                                <a href="<?= base_url('transaksi/delete/' . $row['id']) ?>" 
+                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus transaksi ini?')"
+                                                    class="btn btn-sm btn-danger">
+                                                    Hapus
+                                                </a>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <!-- /.container-fluid -->
 
@@ -220,11 +250,49 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="logout">Logout</a>
+                    <a class="btn btn-primary" href="login">Logout</a>
                 </div>
             </div>
         </div>
     </div>
+
+<!-- MODAL -->
+<div class="modal fade" id="modalUser" tabindex="-1" role="dialog" aria-labelledby="modalUserLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form action="simpan_diskon.php" method="POST">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalUserLabel">Edit User</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="harga">Nama</label>
+                <input type="text" class="form-control" name="harga" id="harga" required>
+            </div>
+            <div class="form-group">
+                <label for="harga">Email</label>
+                <input type="email" class="form-control" name="harga" id="harga" required>
+            </div>
+            <div class="form-group">
+                <label for="kategori">Type</label>
+                <select class="form-control" name="kategori" id="kategori" required>
+                    <option value="" disabled selected>Pilih Kategori</option>
+                    <option value="Keyboard">Customer</option>
+                    <option value="Mouse">Admin</option>
+                </select>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="admin/vendor/jquery/jquery.min.js"></script>
